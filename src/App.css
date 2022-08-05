@@ -1,6 +1,9 @@
 html {
   display: flex;
   justify-content: center;
-  background-color: darkblue;
+  background-image: url(./assets/photography-profile-background.jpg);
   min-width: 700px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
