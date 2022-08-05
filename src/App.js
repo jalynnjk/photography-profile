@@ -1,24 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { DataContext } from './dataContext.js'
+import Profile from './components/profile/Profile';
+import PhotoAlbum from './components/photo_album/PhotoAlbum'
 
 function App() {
+  const [photographerAlbums, setPhotographerAlbums] = useState()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DataContext.Provider className="App"
+    value={{photographerAlbums, setPhotographerAlbums}}
+    >
+      <Profile />
+      <PhotoAlbum />
+    </DataContext.Provider>
   );
 }
 
