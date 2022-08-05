@@ -1,29 +1,36 @@
 import './profile.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { DataContext } from '../../dataContext'
 import axios from 'axios';
 
 function Profile(props) {
-	const [photographers, setPhotographers] = useState([]);
+	const [photographer, setPhotographer] = useState([]);
+    const {setPhotographerAlbums} = useContext(DataContext)
 
-	async function getPhotographers() {
+	async function getPhotographer() {
 		try {
 			const response = await axios.get(
-				'http://localhost:8000/api/photographers'
+				'https://photography-profile-api.herokuapp.com/api/photographers/1'
 			);
-            setPhotographers(response.data)
+            setPhotographer(response.data.data[0])
 		} catch (error) {
             console.log(error)
         }
 	}
 
     useEffect(() => {
-        getPhotographers()
+        getPhotographer()
     }, [])
 
+    useEffect(() => {
+        if (photographer) {
+            setPhotographerAlbums(photographer.albums)
+        }
+    }, [photographer])
+
 	return <div className='profile-component'>
-        {photographers ? (
-        photographers.map((photographer, index) => { return(
-            <div className='profile-container' key={index}>
+        {photographer ? (
+            <div className='profile-container'>
             <img src={photographer.profile_picture} alt='profile picture' className='profile-picture'/>
             <div className='photographer-info'>
                 <h1 className='photographer-name'>{photographer.name}</h1>
@@ -36,10 +43,7 @@ function Profile(props) {
                 <h4 className='email-title'>Email</h4>
                 <p className='email'>{photographer.email}</p>
             </div>
-
-        </div>)
-        })
-        ):<p>photographer is loading</p>}
+        </div>) :<p>photographer is loading</p>}
     </div>;
 }
 
