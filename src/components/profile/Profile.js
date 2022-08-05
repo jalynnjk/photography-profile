@@ -1,7 +1,6 @@
 import './profile.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import profilePic from '../assets/img/profile.jpeg'
 
 function Profile(props) {
 	const [photographers, setPhotographers] = useState([]);
@@ -9,7 +8,7 @@ function Profile(props) {
 	async function getPhotographers() {
 		try {
 			const response = await axios.get(
-				'https://photography-profile-api.herokuapp.com/api/photographers'
+				'http://localhost:8000/api/photographers'
 			);
             setPhotographers(response.data)
 		} catch (error) {
@@ -25,7 +24,7 @@ function Profile(props) {
         {photographers ? (
         photographers.map((photographer, index) => { return(
             <div className='profile-container' key={index}>
-            <img src={profilePic} alt='profile picture' className='profile-picture'/>
+            <img src={photographer.profile_picture} alt='profile picture' className='profile-picture'/>
             <div className='photographer-info'>
                 <h1 className='photographer-name'>{photographer.name}</h1>
                 <h4 className='bio-title'>Bio</h4>
